@@ -27,13 +27,13 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $name = now().'png';
-	$product = Product::create($request->except('image'));
-	$request->image->storeAs('public/images', $name);
-	$product->image()->create(['name' => $name]);
+        $product = Product::create($request->except('image'));
+        $request->image->storeAs('public/images', $name);
+        $product->image()->create(['name' => $name]);
 
-	return response([
-	    'message' => 'data created!',
-	]);
+        return response([
+            'message' => 'data created!',
+        ]);
     }
 
     /**
@@ -58,15 +58,15 @@ class ProductController extends Controller
     {
         if ($request->hasFile('image'))
         {
-	    $name = now().'png';
-	    $product->image()->update(['name' => $name]);   
-	    $request->image->storeAs('public/images', $name);
-	}
-	$product->update($request->except('image'));
+            $name = now().'png';
+            $product->image()->update(['name' => $name]);   
+            $request->image->storeAs('public/images', $name);
+        }
+        $product->update($request->except('image'));
 
-	return response([
-	    'message' => 'data updated!',
-	]);
+        return response([
+            'message' => 'data updated!',
+        ]);
     }
 
     /**
@@ -77,11 +77,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-	$product->image->delete();
-	$product->delete();
+        $product->image->delete();
+        $product->delete();
 
-	return response([
-	    'message' => 'data deleted!',
-	]);
+        return response([
+            'message' => 'data deleted!',
+        ]);
     }
 }
