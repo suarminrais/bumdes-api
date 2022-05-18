@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    // auth controller
+    // auth routes
     Route::post('/login', [AuthController::class, 'store']);
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'destroy']);
+
+    // register route
+    Route::post('/register', [RegisterController::class, 'store']);
 
     // product routes
     Route::middleware('auth:sanctum')->get('/products', [ProductController::class, 'index']);
