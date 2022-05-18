@@ -24,6 +24,10 @@ class User extends Authenticatable
         'type',
     ];
 
+    protected $with = [
+        'image',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

@@ -16,6 +16,10 @@ class Product extends Model
         'category',
         'stock',
     ];
+
+    protected $with = [
+        'image',
+    ];
     
     public function image()
     {
