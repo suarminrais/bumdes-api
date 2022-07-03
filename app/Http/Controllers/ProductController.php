@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -13,9 +16,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::latest()->paginate();
+        $q = $request->query('category', '');
+        return Product::where('category', 'like', "%$q%")->latest()->paginate(10);
     }
 
     /**
@@ -26,8 +30,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $name = now().'png';
-        $product = Product::create($request->except('image'));
+        $name = date('his') . '.png';
+        $user = User::findOrFail(Auth::user()->id);
+        $product = $user->products()->create($request->except('image'));
         $request->image->storeAs('public/images', $name);
         $product->image()->create(['name' => $name]);
 
@@ -56,10 +61,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        if ($request->hasFile('image'))
-        {
-            $name = now().'png';
-            $product->image()->update(['name' => $name]);   
+        if ($request->hasFile('image')) {
+            $name = date('his') . '.png';
+            $product->image()->update(['name' => $name]);
             $request->image->storeAs('public/images', $name);
         }
         $product->update($request->except('image'));

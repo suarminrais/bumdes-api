@@ -5,36 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'price',
-        'description',
-        'category',
-        'stock',
+        'total',
+        'product_id',
+        'status',
         'user_id',
     ];
 
     protected $with = [
-        'image',
+        'product',
         'user',
     ];
-
-    public function image()
-    {
-        return $this->morphOne(Image::class, 'imageable');
-    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function transactions()
+    public function product()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Product::class);
     }
 }

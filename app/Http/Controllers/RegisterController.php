@@ -27,6 +27,9 @@ class RegisterController extends Controller
             'name' => 'default.png',
         ]);
 
+        $user->address()->create();
+        $user->detail()->create();
+
         return response([
             'message' => 'success registered user!',
         ]);

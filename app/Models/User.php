@@ -26,6 +26,8 @@ class User extends Authenticatable
 
     protected $with = [
         'image',
+        'address',
+        'detail',
     ];
 
     /**
@@ -50,5 +52,25 @@ class User extends Authenticatable
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function detail()
+    {
+        return $this->hasOne(Detail::class);
     }
 }
