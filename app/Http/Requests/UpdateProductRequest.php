@@ -25,11 +25,12 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string',
-            'price' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'stock' => 'sometimes|string',
             'image' => 'sometimes|image',
             'category' => 'sometimes|string',
+            'grade' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'price' => 'sometimes|numeric',
+            'stock' => 'sometimes|numeric',
         ];
     }
 }

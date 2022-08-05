@@ -15,6 +15,7 @@ class Product extends Model
         'description',
         'category',
         'stock',
+        'grade',
         'user_id',
     ];
 
