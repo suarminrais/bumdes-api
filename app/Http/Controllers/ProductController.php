@@ -20,8 +20,10 @@ class ProductController extends Controller
     {
         $q = $request->query('category', '');
         $id = $request->query('id', '');
-        $product = Product::findOrFail($id);
-        if ($product) return Product::where('category', 'like', "%$q%")->where('id', '<>', $product->id)->where('price', '>', $product->price)->orderBy('grade')->paginate(10);
+        if ($id) {
+            $product = Product::findOrFail($id);
+            if ($product) return Product::where('category', 'like', "%$q%")->where('id', '<>', $product->id)->where('price', '>', $product->price)->orderBy('grade')->paginate(10);
+        }
         return Product::where('category', 'like', "%$q%")->latest()->paginate(10);
     }
 
