@@ -22,9 +22,13 @@ class ProductController extends Controller
         $id = $request->query('id', '');
         if ($id) {
             $product = Product::findOrFail($id);
-            if ($product) return Product::where('category', 'like', "%$q%")->where('id', '<>', $product->id)->where('price', '>', $product->price)->orderBy('grade')->paginate(10);
+            if ($product) {
+                $up = Product::where('name', 'like', "%$product->name%")->where('category', 'like', "%$q%")->where('id', '<>', $product->id)->where('price', '>', $product->price)->orderBy('grade')->paginate(10);
+                if (!$up->isEmpty()) return $up;
+                else return Product::where('name', 'like', "%$product->name%")->where('category', 'like', "%$q%")->where('id', '<>', $product->id)->orderBy('grade')->paginate(10);;
+            }
         }
-        return Product::where('category', 'like', "%$q%")->latest()->paginate(10);
+        return Product::where('category', 'like', "%$q%")->latest()->paginate(20);
     }
 
     /**
